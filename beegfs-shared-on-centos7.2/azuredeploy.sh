@@ -66,7 +66,7 @@ is_storagenode()
 install_pkgs()
 {
     yum -y install epel-release
-    yum -y install zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget python-pip kernel kernel-devel openmpi openmpi-devel automake autoconf
+    yum -y install zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget python-pip kernel kernel-devel openmpi openmpi-devel automake autoconf 
     systemctl stop firewalld
     systemctl disable firewalld
 }
@@ -100,10 +100,10 @@ EOF
     
     sleep 10
 
-    # Create RAID-0 volume
+    # Create RAID-5 volume
     if [ -n "$createdPartitions" ]; then
         devices=`echo $createdPartitions | wc -w`
-        mdadm --create /dev/$raidDevice --level 0 --raid-devices $devices $createdPartitions
+        mdadm --create /dev/$raidDevice --level 5 --raid-devices $devices $createdPartitions
         
         sleep 10
         
